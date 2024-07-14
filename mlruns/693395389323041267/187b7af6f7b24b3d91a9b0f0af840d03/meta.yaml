@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/oelghareeb/Fashion_MNIST_MLOps/mlruns/693395389323041267/187b7af6f7b24b3d91a9b0f0af840d03/artifacts
+end_time: 1720906203678
+entry_point_name: ''
+experiment_id: '693395389323041267'
+lifecycle_stage: active
+run_id: 187b7af6f7b24b3d91a9b0f0af840d03
+run_name: trusting-loon-901
+run_uuid: 187b7af6f7b24b3d91a9b0f0af840d03
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720905957087
+status: 3
+tags: []
+user_id: oelghareeb

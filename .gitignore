@@ -5,5 +5,3 @@ __pycache__/
 venv/
 uploads/
 lambda_function.zip
-/*
-!/.gitignore

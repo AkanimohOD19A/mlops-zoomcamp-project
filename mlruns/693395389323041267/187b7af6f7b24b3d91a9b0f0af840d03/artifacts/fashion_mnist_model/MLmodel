@@ -1,0 +1,18 @@
+artifact_path: fashion_mnist_model
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.4.1
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.10.1
+mlflow_version: 2.14.3
+model_size_bytes: 2733616
+model_uuid: 021fe4147a1844cb890ba1f3902c7bb3
+run_id: 187b7af6f7b24b3d91a9b0f0af840d03
+utc_time_created: '2024-07-13 21:29:58.298840'

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/oelghareeb/Fashion_MNIST_MLOps/mlruns/693395389323041267/5aa8afca6f5d4346ba196739be51dd93/artifacts
+end_time: 1720905900386
+entry_point_name: ''
+experiment_id: '693395389323041267'
+lifecycle_stage: active
+run_id: 5aa8afca6f5d4346ba196739be51dd93
+run_name: bemused-tern-651
+run_uuid: 5aa8afca6f5d4346ba196739be51dd93
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720905896609
+status: 4
+tags: []
+user_id: oelghareeb
