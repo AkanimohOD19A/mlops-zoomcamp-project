@@ -1,11 +1,12 @@
 # Fashion MNIST Image Classifier
-![alt text](app.png "Fashion MNIST Web App")
+![alt text](webapp.png "Fashion MNIST Web App")
 
 
 ## Problem Statement
-This project aims to develop a Flask-based web application for classifying fashion items into specific categories using a convolutional neural network (CNN) model. The project will also focus on employing MLOps techniques to ensure the application is robust and maintainable. This includes continuous integration, continuous deployment (CI/CD), automated testing, and containerization.
+This project aims to develop a Flask-based web application for classifying fashion items into specific categories using a convolutional neural network (CNN) model. The project will also focus on MLOps techniques to ensure the application is robust and maintainable. This includes continuous integration, continuous deployment (CI/CD), automated testing, and containerization.
 
-Here is the list of classes:
+Below is a list of classes:
+
 ![alt text](intro.png "Fashion MNIST Classifier")
 
 
@@ -24,6 +25,7 @@ The primary objective of this project is to create a web application that allows
 
 ## CNN Architecture
 The CNN model used in this project is defined as follows:
+
 ![alt text](model.png "CNN Architecture")
 
 ```python
