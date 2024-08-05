@@ -93,8 +93,8 @@ The application should start listening at [http://<EC2_DNS_NAME>:80](http://<EC2
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fashion-mnist-classifier.git
-cd fashion-mnist-classifier
+git clone https://github.com/oelghareeb/mlops-zoomcamp-project.git
+cd mlops-zoomcamp-project
 ```
 
 2. Install dependencies:
@@ -102,14 +102,14 @@ cd fashion-mnist-classifier
 pip install -r requirements.txt
 ```
 
-3. Download the data:
+3. access the data:
 ```bash
-python download_data.py
+cd data
 ```
 
 4. Train the model:
 ```bash
-python scripts/train.py
+python src/train.py
 ```
 
 5. Run the web application:
