@@ -1,7 +1,12 @@
-__pycache__/
-*.pyc
-*.pyo
-.env
+# Infrastructure
+.terraform/
+dbc_key
+dbc_key.pub
+
+# APP
 venv/
 uploads/
-lambda_function.zip
+__pycache__/
+.pytest_cache
+static/
+data/fashion_mnist_model_final.h5
