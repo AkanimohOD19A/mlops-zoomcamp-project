@@ -2,48 +2,111 @@
 
 ![alt text](intro.png "Fashion MNIST Classifier")
 
-## Problem Definition
-This project aims to develop a Flask-based web application that classifies fashion items into specific categories using a convolutional neural network (CNN) model. The project will also employ MLOps techniques to ensure the application is robust and maintainable. This includes continuous integration, continuous deployment (CI/CD), automated testing, and containerization.
-
-## Dataset Overview
-Fashion-MNIST is a dataset developed by Zalando, consisting of 70,000 grayscale images of fashion items. It serves as a benchmark for machine learning algorithms, designed to replace the original MNIST dataset while maintaining the same format and size.
-
-### Dataset Details
-- **Size and Structure**: The dataset comprises a training set of 60,000 examples and a test set of 10,000 examples. Each image is 28x28 pixels, resulting in a total of 784 pixels per image.
-- **Labeling**: Images are associated with 10 distinct classes representing different fashion items:
-  - 0: T-shirt/top
-  - 1: Trouser
-  - 2: Pullover
-  - 3: Dress
-  - 4: Coat
-  - 5: Sandal
-  - 6: Shirt
-  - 7: Sneaker
-  - 8: Bag
-  - 9: Ankle boot
-- **Pixel Values**: Each pixel in the image has an integer value ranging from 0 to 255, representing its lightness or darkness.
-
-### Content Description
-- **Data Format**: Both the training and test datasets are structured with 785 columns. The first column contains the class label, while the remaining 784 columns correspond to the pixel values of the associated image.
-- **Image Preprocessing**: Pixel values are normalized to a range of 0 to 1 by dividing each value by 255.
+## Problem Statement
+This project aims to develop a Flask-based web application for classifying fashion items into specific categories using a convolutional neural network (CNN) model. The project will also focus on employing MLOps techniques to ensure the application is robust and maintainable. This includes continuous integration, continuous deployment (CI/CD), automated testing, and containerization.
 
 ## Objective
-The goal of this project is to develop a convolutional neural network (CNN) model capable of accurately classifying these fashion items based on their grayscale images. The model will be trained on the training dataset and evaluated on the test dataset to measure its performance in terms of accuracy and loss.
-
-## Approach
-1. **Data Loading and Preprocessing**: Load the dataset, preprocess the images by normalizing pixel values, and split them into training and testing sets.
-2. **Model Development**: Construct a CNN model using TensorFlow/Keras to classify the fashion items. Experiment with different architectures and hyperparameters to optimize model performance.
-3. **Training and Evaluation**: Train the model on the training set, monitor its performance using validation data, and evaluate it on the test set to assess generalization capability.
-4. **Deployment**: Deploy the trained model as a web application using Flask, allowing users to upload images for real-time classification.
-
-## MLOps Practices
+The primary objective of this project is to create a web application that allows users to upload images of fashion items and receive classification predictions. The project will cover the following key areas:
+- **Image Upload Functionality**: Implement a web interface where users can upload images of fashion items.
+- **Model Integration**: Integrate a trained CNN model for fashion item classification.
+- **Image Storage**: Ensure images are stored on the server.
+- **Prediction Retrieval**: Provide a mechanism for users to view classification predictions.
 - **Code Quality**: Utilize linting tools (e.g., flake8) to maintain high code quality.
 - **Automated Testing**: Implement unit and integration tests using pytest to ensure the application works as expected.
 - **Continuous Integration**: Set up GitHub Actions to automate testing and linting on each commit.
+- **Infrastructure as Code**: Use Terraform to create and manage infrastructure.
 - **Containerization**: Use Docker to containerize the application for consistent deployment across different environments.
 - **Makefile Automation**: Create a Makefile to automate common tasks like building and running the Docker container, running tests, and linting.
 
+## CNN Architecture
+The CNN model used in this project is defined as follows:
+![alt text](model.png "CNN Architecture")
+
+```python
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    MaxPooling2D((2, 2)),
+
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(10, activation='softmax')
+])
+```
+
 ## Infrastructure Setup
-### Generate EC2 instance SSH key
+
+### Generate EC2 Instance SSH Key
 ```bash
-cd iac && ssh-keygen -f fashion_mnist_key
+cd terraform && ssh-keygen -f fashion_mnist_key
+```
+
+### Setup AWS
+- Adjust Terraform S3 backend name in the `providers.tf`.
+- Run `aws configure` and provide your Access Keys.
+- Adjust VPC ID in the `main.auto.tfvars`.
+- `terraform init`
+- `terraform plan`
+- `terraform apply`
+
+### Configure Docker on the EC2
+Substitute `<EC2_DNS_INSTANCE_HOSTNAME>` with the EC2 instance DNS address.
+```bash
+ssh -i "fashion_mnist_key" ec2-user@<EC2_DNS_INSTANCE_HOSTNAME>
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+## Model Training
+The model `fashion_mnist_model.h5` is committed to the repository. To train it from scratch:
+- Ensure an MLFLOW instance is running and configure AWS credentials in the `.env` file.
+```bash
+make train-model
+```
+Git LFS is required to commit the model to GitHub as it's more than 200MB.
+```bash
+git lfs install
+git lfs track "*.h5"
+git add .gitattributes
+git add model/fashion_mnist_model.h5
+```
+
+## Web Application Deployment
+The web application is deployed with GitHub Actions automatically to the EC2 instance. The GHA workflow requires the following secrets to be set up for successful deployment:
+```plaintext
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+EC2_SSH_KEY
+EC2_USER
+EC2_HOST
+```
+The application should start listening at [http://<EC2_DNS_NAME>:80](http://<EC2_DNS_NAME>:80).
+
+## Setup Instructions
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/fashion-mnist-classifier.git
+cd fashion-mnist-classifier
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Download the data:
+```bash
+python download_data.py
+```
+
+4. Train the model:
+```bash
+python scripts/train.py
+```
+
+5. Run the web application:
+```bash
+python src/main.py
+```
