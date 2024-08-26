@@ -20,7 +20,7 @@ def main():
         model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
         # Train model
-        history = model.fit(X_train, y_train, epochs=5, validation_data=(X_test, y_test))
+        history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
 
         # Log metrics to MLflow
         for metric_name, metric_value in history.history.items():
