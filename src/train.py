@@ -9,8 +9,8 @@ def main():
 
     with mlflow.start_run():
         # Load and preprocess data
-        train_filepath = "/Users/oelghareeb/Fashion_MNIST_MLOps/data/fashion-mnist_train.csv"
-        test_filepath = "/Users/oelghareeb/Fashion_MNIST_MLOps/data/fashion-mnist_test.csv"
+        train_filepath = "./data/fashion-mnist_train.csv"
+        test_filepath = "./data/fashion-mnist_test.csv"
         X_train, y_train, X_test, y_test = load_and_preprocess_data(train_filepath, test_filepath)
 
         # Build model
