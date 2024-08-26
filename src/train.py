@@ -1,7 +1,9 @@
 # src/train.py
+import os
 import mlflow
 from model import build_model  # Adjust the import path if necessary
 from data_preprocessing import load_and_preprocess_data  # Adjust the import path if necessary
+from mlflow.models.signature import infer_signature  # Model Signature
 
 def main():
     # Set MLflow experiment
@@ -18,14 +20,16 @@ def main():
         model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
         # Train model
-        history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+        history = model.fit(X_train, y_train, epochs=5, validation_data=(X_test, y_test))
 
         # Log metrics to MLflow
         for metric_name, metric_value in history.history.items():
             mlflow.log_metric(metric_name, metric_value[-1])  # Log the last value of each metric
 
         # Log model to MLflow
-        mlflow.keras.log_model(model, "fashion_mnist_model")
+        signature = infer_signature(X_train, model.predict(X_train))
+        artifact_path = os.path.join(os.getcwd(), 'artifact_dir')
+        mlflow.keras.log_model(model, artifact_path, signature = signature)
 
 if __name__ == "__main__":
     main()
